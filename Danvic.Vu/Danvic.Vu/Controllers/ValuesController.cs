@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Danvic.Vu.Controllers
 {
+    /// <summary>
+    /// 测试接口
+    /// </summary>
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
         // GET api/values
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -17,6 +21,11 @@ namespace Danvic.Vu.Controllers
         }
 
         // GET api/values/5
+        /// <summary>
+        /// 获取数据信息
+        /// </summary>
+        /// <param name="id">主键Id</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public string Get(int id)
         {

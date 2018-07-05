@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Danvic.Vu.Tools;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
 
 namespace Danvic.Vu
 {
@@ -19,18 +22,32 @@ namespace Danvic.Vu
         public void ConfigureServices(IServiceCollection services)
         {
             //register the swagger document
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Info
+            services.AddSwaggerGen(c =>
             {
-                Version = "v1",
-                Title = "Vu Project API",
-                Description = "A front-end separation project using ASP.NET Core Web API",
-                Contact = new Contact
+                c.SwaggerDoc("v1", new Info
                 {
-                    Name = "Danvic Wang",
-                    Email = "danvic96@hotmail.com",
-                    Url = "https://github.com/Lanesra712"
-                }
-            }));
+                    Version = "v1",
+                    Title = "Vu Project API",
+                    Description = "A front-end separation project using ASP.NET Core Web API",
+                    Contact = new Contact
+                    {
+                        Name = "Danvic Wang",
+                        Email = "danvic96@hotmail.com",
+                        Url = "https://github.com/Lanesra712"
+                    }
+                });
+
+                //set swagger comments for Json or UI
+                //
+                var basePath = Path.GetDirectoryName(AppContext.BaseDirectory);//get application located directory
+                var xmlPath = Path.Combine(basePath, "Danvic.Vu.xml");
+                c.IncludeXmlComments(xmlPath);
+
+                //add custom description
+                c.DocumentFilter<SwaggerDocDescription>();
+            });
+
+
 
             services.AddMvc();
         }
